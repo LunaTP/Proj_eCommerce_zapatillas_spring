@@ -4,10 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import pe.edu.ecommerceZapatillas.entity.DetallesVenta;
-import pe.edu.ecommerceZapatillas.entity.Usuarios;
-import pe.edu.ecommerceZapatillas.repository.DetallesVentasRepository;
-import pe.edu.ecommerceZapatillas.repository.UsuariosRepository;
+import pe.edu.ecommerceZapatillas.dto.DetalleVentaDto;
+import pe.edu.ecommerceZapatillas.dto.ProductosDto;
+import pe.edu.ecommerceZapatillas.dto.RolesDto;
+import pe.edu.ecommerceZapatillas.dto.UsuariosDto;
+import pe.edu.ecommerceZapatillas.service.MaintenanceService;
 
 import java.util.List;
 
@@ -19,11 +20,20 @@ public class EcommerceZapatillasApplication implements CommandLineRunner {
 	}
 
 	@Autowired
-	DetallesVentasRepository detallesVentasRepository;
+	MaintenanceService maintenanceService;
 
 	@Override
 	public void run(String... args) throws Exception {
-		detallesVentasRepository.findAll().forEach(System.out::println);
+		List<DetalleVentaDto> detalleVentaDtos = maintenanceService.getAllDetalleVenta();
+		List<RolesDto> rolesDtos = maintenanceService.getAllRoles();
+		List<UsuariosDto> usuariosDtos = maintenanceService.getAllUsuarios();
+		List<ProductosDto> productosDtos = maintenanceService.getAllProductos();
+
+		rolesDtos.forEach(System.out::println);
+		usuariosDtos.forEach(System.out::println);
+		productosDtos.forEach(System.out::println);
+		detalleVentaDtos.forEach(System.out::println);
+
 
 	}
 }
