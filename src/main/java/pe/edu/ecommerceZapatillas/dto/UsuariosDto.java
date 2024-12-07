@@ -1,4 +1,4 @@
 package pe.edu.ecommerceZapatillas.dto;
 
-public record UsuariosDto() {
+public record UsuariosDto(String nombre, String email, String contrasenia) {
 }

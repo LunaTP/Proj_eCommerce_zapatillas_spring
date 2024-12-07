@@ -1,4 +1,6 @@
 package pe.edu.ecommerceZapatillas.dto;
 
-public record VentasDto() {
+import java.util.Date;
+
+public record VentasDto(Integer id, Date fecha) {
 }
