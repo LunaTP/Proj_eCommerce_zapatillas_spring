@@ -22,7 +22,6 @@ public class HikariCpConfig {
     public HikariDataSource hikariDataSource() {
 
         HikariConfig config = new HikariConfig();
-
         /**
          * Configurar propiedad de conexion a BD
          */
