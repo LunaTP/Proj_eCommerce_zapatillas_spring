@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class Productos {
     private Double precio;
     private Integer stock;
 
-    @OneToMany(mappedBy = "productoId", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "productoId", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @ToString.Exclude
     private List<DetallesVenta> detallesVentas;
 }

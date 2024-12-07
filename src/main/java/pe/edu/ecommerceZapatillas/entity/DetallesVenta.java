@@ -17,11 +17,11 @@ public class DetallesVenta {
     private Integer cantidad;
     private Double precioUnitario;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "venta_id")
     private Ventas ventaId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "producto_id")
     private Productos productoId;
 }

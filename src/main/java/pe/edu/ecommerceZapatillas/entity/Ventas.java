@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Date;
 import java.util.List;
@@ -19,11 +20,12 @@ public class Ventas {
     private Date fecha;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuarios usuarioId;
 
-    @OneToMany(mappedBy = "ventaId", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "ventaId", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @ToString.Exclude
     private List<DetallesVenta> detallesVentas;
 
 
