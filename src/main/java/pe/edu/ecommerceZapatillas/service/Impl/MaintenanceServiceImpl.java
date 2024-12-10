@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Service
 public class MaintenanceServiceImpl implements MaintenanceService {
+
     @Autowired
     ProductosRepository productosRepository;
 
@@ -60,7 +61,8 @@ public class MaintenanceServiceImpl implements MaintenanceService {
                     item.getId(),
                     item.getNombre(),
                     item.getEmail(),
-                    item.getRolId().getNombre()
+                    item.getRolId().getId(),
+                    item.getContrasenia()
             );
             lista.add(dto);
         });
@@ -99,6 +101,18 @@ public class MaintenanceServiceImpl implements MaintenanceService {
 
         System.out.println("Se creo un nuevo Usuario");
 
+        Integer rolId = (usuariosDto.rol() != null) ? usuariosDto.rol() : 2;
+
+        Roles rol = rolesRepository.findById(rolId)
+                .orElseThrow(() -> new RuntimeException("Rol con ID " + rolId + " no encontrado"));
+
+        Usuarios usuarios = new Usuarios();
+        usuarios.setNombre(usuariosDto.nombre());
+        usuarios.setEmail(usuariosDto.email());
+        usuarios.setRolId(rol);
+        usuarios.setContrasenia(usuariosDto.contrasenia());
+
+        usuariosRepository.save(usuarios);
     }
 
     @Override
