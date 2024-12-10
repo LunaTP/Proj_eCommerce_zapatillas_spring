@@ -124,6 +124,18 @@ public class MaintenanceServiceImpl implements MaintenanceService {
         System.out.println("Se elimino el usuario: " + id);
     }
 
+    @Override
+    public UsuarioLoginDto login(String email, String contrasenia) {
+
+        Usuarios usuarios = usuariosRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        if(!usuarios.getContrasenia().equals(contrasenia)) {
+            throw new RuntimeException("Credenciales incorrectas");
+        }
+
+        return new UsuarioLoginDto(usuarios.getEmail(), usuarios.getContrasenia());
+    }
 
 
     /**
