@@ -20,24 +20,20 @@ public class MaintenanceController {
      * Usuarios
      */
     //Lista de Usuarios
-    @GetMapping("/indexUsuarios")
-    public List<UsuariosDetailDto> listUsuarios(){
+    @GetMapping("/usuarios")
+    public Object getUsuarios(@RequestParam(name = "id", required = false) Integer id) {
+        if (id != null) {
+            return maintenanceService.getUsuarioById(id);
+        }
         return maintenanceService.getAllUsuarios();
     }
-    //Get Usuario por Id
-    @GetMapping("/usuario/{id}")
-    public UsuariosDto getUsuario(@PathVariable Integer id){
-        return maintenanceService.getUsuarioById(id);
-    }
+
+
     //Create Usuario
     @PostMapping("/registerUsuario")
-    public ResponseEntity<String> createUsuario(@RequestBody UsuariosDto usuariosDto){
-        try {
+    public String createUsuario(@RequestBody UsuariosDto usuariosDto){
             maintenanceService.createUsuario(usuariosDto);
-            return new ResponseEntity<>("Usuario creado exitosamente", HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error al crear el usuario: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            return usuariosDto.toString();
     }
     //Update Usuario
 
