@@ -18,9 +18,11 @@ import pe.edu.ecommerceZapatillas.service.MaintenanceService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MaintenanceServiceImpl implements MaintenanceService {
+
     @Autowired
     ProductosRepository productosRepository;
 
@@ -62,7 +64,8 @@ public class MaintenanceServiceImpl implements MaintenanceService {
             UsuariosDto dto = new UsuariosDto(
                     item.getNombre(),
                     item.getEmail(),
-                    item.getRolId().getNombre()
+                    item.getRolId().getId(),
+                    item.getContrasenia()
             );
             usuariosDtos.add(dto);
         });
@@ -72,12 +75,32 @@ public class MaintenanceServiceImpl implements MaintenanceService {
 
     @Override
     public UsuariosDto getUsuarioById(Integer id) {
-        return null;
+        Optional<Usuarios> optional = usuariosRepository.findById(id);
+        return optional.map(
+                usuarios -> new UsuariosDto(
+                        usuarios.getNombre(),
+                        usuarios.getEmail(),
+                        usuarios.getRolId().getId(),
+                        usuarios.getContrasenia()
+                )
+        ).orElse(null);
     }
 
     @Override
     public void createUsuario(UsuariosDto usuariosDto) {
 
+        Integer rolId = (usuariosDto.rol() != null) ? usuariosDto.rol() : 2;
+
+        Roles rol = rolesRepository.findById(rolId)
+                .orElseThrow(() -> new RuntimeException("Rol con ID " + rolId + " no encontrado"));
+
+        Usuarios usuarios = new Usuarios();
+        usuarios.setNombre(usuariosDto.nombre());
+        usuarios.setEmail(usuariosDto.email());
+        usuarios.setRolId(rol);
+        usuarios.setContrasenia(usuariosDto.contrasenia());
+
+        usuariosRepository.save(usuarios);
     }
 
     @Override
