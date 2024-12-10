@@ -87,7 +87,7 @@ public class MaintenanceServiceImpl implements MaintenanceService {
 
     @Override
     public void createUsuario(UsuariosDto usuariosDto) {
-        Optional<Roles> roles = rolesRepository.findById(usuariosDto.rolId());
+        Optional<Roles> roles = rolesRepository.findById(2);
         Roles rol = roles.get();
 
         Usuarios usuarios = new Usuarios();

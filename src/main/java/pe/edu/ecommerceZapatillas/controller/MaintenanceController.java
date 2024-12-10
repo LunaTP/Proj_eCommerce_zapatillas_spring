@@ -37,10 +37,15 @@ public class MaintenanceController {
             return usuariosDto.toString();
     }
     //Update Usuario
+    @PostMapping("/updateUsuario")
+    public String updateUsuario(@RequestBody UsuariosDto usuariosDto){
+        maintenanceService.updateUsuario(usuariosDto);
+        return usuariosDto.toString();
+    }
 
     //Delete Usuario
-    @PostMapping("/deleteUsuario/{id}")
-    public void deleteUsuario(@PathVariable Integer id){
+    @PostMapping("/deleteUsuario")
+    public void deleteUsuario(@RequestParam Integer id) {
         maintenanceService.deleteUsuario(id);
     }
 
@@ -88,6 +93,7 @@ public class MaintenanceController {
     public List<DetalleVentaDto> listDetalleVenta(){
         return maintenanceService.getAllDetallesVenta();
     }
+
     //Obtener los Detalles de Venta por id de la venta
     @GetMapping("/detallesVenta/{id}")
     public ResponseEntity<List<DetalleVentaDto>> getDetallesVentaByVentaId(@PathVariable Integer id) {
