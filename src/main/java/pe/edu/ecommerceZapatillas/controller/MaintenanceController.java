@@ -50,6 +50,16 @@ public class MaintenanceController {
     }
 
 
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UsuarioLoginDto usuarioLoginDto){
+        try {
+            UsuarioLoginDto usuarioLoginDto1 = maintenanceService.login(usuarioLoginDto.email(), usuarioLoginDto.contrasenia());
+            return new ResponseEntity<>(usuarioLoginDto1, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 
 
