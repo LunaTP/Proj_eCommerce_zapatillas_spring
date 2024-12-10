@@ -1,4 +1,6 @@
 package pe.edu.ecommerceZapatillas.dto;
 
-public record UsuariosDto(String nombre, String email, String rol) {
+import pe.edu.ecommerceZapatillas.entity.Roles;
+
+public record UsuariosDto(Integer id ,String nombre, String email, Integer rolId, String contrasenia) {
 }

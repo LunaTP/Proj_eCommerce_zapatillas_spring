@@ -1,9 +1,6 @@
 package pe.edu.ecommerceZapatillas.service;
 
-import pe.edu.ecommerceZapatillas.dto.DetalleVentaDto;
-import pe.edu.ecommerceZapatillas.dto.ProductosDto;
-import pe.edu.ecommerceZapatillas.dto.RolesDto;
-import pe.edu.ecommerceZapatillas.dto.UsuariosDto;
+import pe.edu.ecommerceZapatillas.dto.*;
 
 import java.util.List;
 
@@ -17,7 +14,7 @@ public interface MaintenanceService {
     /**
      * Usuarios
      */
-    List<UsuariosDto> getAllUsuarios();
+    List<UsuariosDetailDto> getAllUsuarios();
 
     UsuariosDto getUsuarioById(Integer id);
 
@@ -29,7 +26,7 @@ public interface MaintenanceService {
     /**
      * Productos
      */
-    List<ProductosDto> getAllProductos();
+    List<ProductosDetailDto> getAllProductos();
 
     ProductosDto getProductoById(Integer id);
 
@@ -40,8 +37,11 @@ public interface MaintenanceService {
     void deleteProducto(Integer id);
 
     /**
-     * DetalleVenta
+     * Ventas
      */
-    List<DetalleVentaDto> getAllDetalleVenta();
+    List<DetalleVentaDto> getAllDetallesVenta();
 
+    List<DetalleVentaDto> getDetallesVentaByVentaId(Integer ventaId);
+
+    void registrarVenta(VentasDto ventasDto);
 }

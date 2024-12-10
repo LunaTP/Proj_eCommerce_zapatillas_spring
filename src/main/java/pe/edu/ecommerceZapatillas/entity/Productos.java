@@ -1,5 +1,6 @@
 package pe.edu.ecommerceZapatillas.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,5 +25,6 @@ public class Productos {
 
     @OneToMany(mappedBy = "productoId", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @ToString.Exclude
+    @JsonIgnore
     private List<DetallesVenta> detallesVentas;
 }

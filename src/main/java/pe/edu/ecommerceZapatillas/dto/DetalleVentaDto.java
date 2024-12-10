@@ -1,4 +1,4 @@
 package pe.edu.ecommerceZapatillas.dto;
 
-public record DetalleVentaDto(String nombre, String nombreProducto,Integer cantidad, Double precio) {
+public record DetalleVentaDto(Integer ventaId,Integer productoId,Integer cantidad, Double precioUnitario, Double Total) {
 }
