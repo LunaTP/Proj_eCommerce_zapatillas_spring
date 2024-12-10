@@ -22,7 +22,11 @@ public interface MaintenanceService {
 
     void updateUsuario(UsuariosDto usuariosDto);
 
+
     void deleteUsuario(Integer id);
+
+    UsuarioLoginDto login(String email, String contrasenia);
+
     /**
      * Productos
      */
