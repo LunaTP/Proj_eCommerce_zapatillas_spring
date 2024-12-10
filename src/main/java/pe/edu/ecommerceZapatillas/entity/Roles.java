@@ -1,5 +1,6 @@
 package pe.edu.ecommerceZapatillas.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class Roles {
 
     @OneToMany(mappedBy = "rolId", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @ToString.Exclude
+    @JsonIgnore
     private List<Usuarios> usuarios;
 
 }
