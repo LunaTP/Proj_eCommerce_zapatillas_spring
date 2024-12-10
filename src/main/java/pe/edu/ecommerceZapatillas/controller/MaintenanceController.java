@@ -9,6 +9,7 @@ import pe.edu.ecommerceZapatillas.service.MaintenanceService;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/maintenance")
 public class MaintenanceController {
@@ -50,18 +51,14 @@ public class MaintenanceController {
     /**
      * Productos
      */
-    //Lista de Productos
-    @GetMapping("/indexProductos")
-    public List<ProductosDetailDto> listProductos(){
+    //Lista de Productos    //Get Producto por Id
+    @GetMapping("/productos")
+    public Object getProducto(@RequestParam(name = "id", required = false) Integer id){
+        if (id != null) {
+            return maintenanceService.getProductoById(id);
+        }
         return maintenanceService.getAllProductos();
     }
-    //Get Producto por Id
-    @GetMapping("/producto/{id}")
-    public ProductosDto getProducto(@PathVariable Integer id){
-        return maintenanceService.getProductoById(id);
-    }
-
-
 
 
 

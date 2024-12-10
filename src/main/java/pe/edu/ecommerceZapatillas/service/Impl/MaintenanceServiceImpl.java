@@ -61,8 +61,7 @@ public class MaintenanceServiceImpl implements MaintenanceService {
                     item.getId(),
                     item.getNombre(),
                     item.getEmail(),
-                    item.getRolId().getId(),
-                    item.getContrasenia()
+                    item.getRolId().getNombre()
             );
             lista.add(dto);
         });
@@ -80,7 +79,7 @@ public class MaintenanceServiceImpl implements MaintenanceService {
                 item.getId(),
                 item.getNombre(),
                 item.getEmail(),
-                usu.getId(),
+                usu.getRolId().getId(),
                 item.getContrasenia()
         )).orElse(null);
 
@@ -100,19 +99,6 @@ public class MaintenanceServiceImpl implements MaintenanceService {
         usuariosRepository.save(usuarios);
 
         System.out.println("Se creo un nuevo Usuario");
-
-        Integer rolId = (usuariosDto.rol() != null) ? usuariosDto.rol() : 2;
-
-        Roles rol = rolesRepository.findById(rolId)
-                .orElseThrow(() -> new RuntimeException("Rol con ID " + rolId + " no encontrado"));
-
-        Usuarios usuarios = new Usuarios();
-        usuarios.setNombre(usuariosDto.nombre());
-        usuarios.setEmail(usuariosDto.email());
-        usuarios.setRolId(rol);
-        usuarios.setContrasenia(usuariosDto.contrasenia());
-
-        usuariosRepository.save(usuarios);
     }
 
     @Override
