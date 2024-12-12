@@ -11,23 +11,12 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/maintenance")
-public class MaintenanceController {
+@RequestMapping("/api")
+public class ApiController {
 
     @Autowired
     MaintenanceService maintenanceService;
 
-    /**
-     * Usuarios
-     */
-    //Lista de Usuarios
-    @GetMapping("/usuarios")
-    public Object getUsuarios(@RequestParam(name = "id", required = false) Integer id) {
-        if (id != null) {
-            return maintenanceService.getUsuarioById(id);
-        }
-        return maintenanceService.getAllUsuarios();
-    }
 
 
     //Create Usuario
@@ -42,13 +31,6 @@ public class MaintenanceController {
         maintenanceService.updateUsuario(usuariosDto);
         return usuariosDto.toString();
     }
-
-    //Delete Usuario
-    @PostMapping("/deleteUsuario")
-    public void deleteUsuario(@RequestParam Integer id) {
-        maintenanceService.deleteUsuario(id);
-    }
-
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UsuarioLoginDto usuarioLoginDto){

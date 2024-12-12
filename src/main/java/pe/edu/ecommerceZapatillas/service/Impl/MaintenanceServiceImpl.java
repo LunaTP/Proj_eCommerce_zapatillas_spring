@@ -39,7 +39,9 @@ public class MaintenanceServiceImpl implements MaintenanceService {
         Iterable<Roles> roles = rolesRepository.findAll();
 
         roles.forEach(item ->{
-            RolesDto rolesDto = new RolesDto(item.getNombre());
+            RolesDto rolesDto = new RolesDto(
+                    item.getId(),
+                    item.getNombre());
             rolesDtos.add(rolesDto);
         });
         System.out.println("Fin del listado de roles");
@@ -87,7 +89,12 @@ public class MaintenanceServiceImpl implements MaintenanceService {
 
     @Override
     public void createUsuario(UsuariosDto usuariosDto) {
-        Optional<Roles> roles = rolesRepository.findById(2);
+        int rolId = usuariosDto.rolId() != null ? usuariosDto.rolId() : 2;
+
+        Optional<Roles> roles = rolesRepository.findById(rolId);
+        if (roles.isEmpty()) {
+            throw new IllegalArgumentException("El rol con ID " + rolId + " no existe.");
+        }
         Roles rol = roles.get();
 
         Usuarios usuarios = new Usuarios();
@@ -174,13 +181,28 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     }
 
     @Override
-    public void createProducto(ProductosDto usuariosDto) {
+    public void createProducto(ProductosDto productosDto) {
+        Productos productos = new Productos();
+        productos.setNombre(productosDto.nombre());
+        productos.setDescripcion(productosDto.descripcion());
+        productos.setStock(productosDto.stock());
+        productos.setPrecio(productosDto.precio());
 
+        productosRepository.save(productos);
+        System.out.println("Se registro nuevo producto");
     }
 
     @Override
-    public void updateProducto(ProductosDto usuariosDto) {
+    public void updateProducto(ProductosDto productosDto) {
+        Optional<Productos> optionalProductos = productosRepository.findById(productosDto.id());
+        Productos productos = optionalProductos.get();
+        productos.setNombre(productosDto.nombre());
+        productos.setDescripcion(productosDto.descripcion());
+        productos.setStock(productosDto.stock());
+        productos.setPrecio(productosDto.precio());
 
+        productosRepository.save(productos);
+        System.out.println("Se actualizo el producto");
     }
 
     @Override

@@ -1,4 +1,4 @@
 package pe.edu.ecommerceZapatillas.dto;
 
-public record RolesDto(String nombre) {
+public record RolesDto(Integer id,String nombre) {
 }
