@@ -41,11 +41,18 @@ public interface MaintenanceService {
     void deleteProducto(Integer id);
 
     /**
+     * Detalles Ventas
+     */
+    List<DetalleVentaDetailDto> getAllDetallesVenta();
+
+    /**
      * Ventas
      */
-    List<DetalleVentaDto> getAllDetallesVenta();
+    List<VentasDetailDto> getAllVentas();
 
-    List<DetalleVentaDto> getDetallesVentaByVentaId(Integer ventaId);
+    VentasDto getVentaById(Integer id);
+
+    void editarVenta(VentasDto ventasDto);
 
     void registrarVenta(VentasDto ventasDto);
 }

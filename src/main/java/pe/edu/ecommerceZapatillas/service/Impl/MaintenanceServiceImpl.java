@@ -241,40 +241,104 @@ public class MaintenanceServiceImpl implements MaintenanceService {
 
 
     @Override
-    public List<DetalleVentaDto> getAllDetallesVenta() {
-        List<DetalleVentaDto> list = new ArrayList<>();
-        Iterable<DetallesVenta> detallesVentas = detallesVentasRepository.findAll();
+    public List<VentasDetailDto> getAllVentas() {
+        List<VentasDetailDto> list = new ArrayList<>();
+        Iterable<Ventas> ventas = ventasRepository.findAll();
 
-        detallesVentas.forEach(item ->{
-            DetalleVentaDto dto = new DetalleVentaDto(
-                    item.getVentaId().getId(),
+        ventas.forEach(item->{
+            VentasDetailDto dto = new VentasDetailDto(
                     item.getId(),
-                    item.getCantidad(),
-                    item.getPrecioUnitario(),
-                    item.getPrecioUnitario()*item.getCantidad());
-            list.add(dto);
-        });
-        System.out.println("Fin del listado de Productos");
-        return list;
-    }
-
-
-    @Override
-    public List<DetalleVentaDto> getDetallesVentaByVentaId(Integer ventaId) {
-        List<DetalleVentaDto> list = new ArrayList<>();
-        List<DetallesVenta> detallesVentas = detallesVentasRepository.findByVentaId_Id(ventaId);
-
-        detallesVentas.forEach(item -> {
-            DetalleVentaDto dto = new DetalleVentaDto(
-                    item.getVentaId().getId(),
-                    item.getProductoId().getId(),
-                    item.getCantidad(),
-                    item.getPrecioUnitario(),
-                    item.getPrecioUnitario() * item.getCantidad()
+                    item.getFecha(),
+                    item.getUsuarioId().getNombre()
             );
             list.add(dto);
         });
+
         return list;
     }
+
+    @Override
+    public VentasDto getVentaById(Integer id) {
+        Optional<Ventas> ventas = ventasRepository.findById(id);
+
+        List<DetalleVentaDto> list = new ArrayList<>();
+        Iterable<DetallesVenta> detalleVentaDtos= detallesVentasRepository.findByVentaId_Id(id);
+        detalleVentaDtos.forEach(item ->{
+            DetalleVentaDto dto = new DetalleVentaDto(
+                    item.getId(),
+                    item.getVentaId().getId(),
+                    item.getProductoId().getId(),
+                    item.getCantidad(),
+                    item.getPrecioUnitario()
+            );
+            list.add(dto);
+        });
+
+        return ventas.map(item -> new VentasDto(
+                item.getId(),
+                item.getFecha(),
+                item.getUsuarioId().getId(),
+                list
+
+        )).orElse(null);
+    }
+
+    @Override
+    public void editarVenta(VentasDto ventasDto) {
+        Optional<Ventas> optional = ventasRepository.findById(ventasDto.id());
+
+        Ventas ventas = optional.get();
+        ventas.setFecha(new Date());
+
+        Optional<Usuarios> usuario = usuariosRepository.findById(ventasDto.usuarioId());
+        usuario.ifPresent(ventas::setUsuarioId);
+
+        Ventas ventaActualizada = ventasRepository.save(ventas);
+        // Crear nuevos detalles para la venta
+        List<DetallesVenta> nuevosDetalles = new ArrayList<>();
+        for (DetalleVentaDto dto : ventasDto.detalles()) {
+            DetallesVenta detallesVenta = new DetallesVenta();
+            detallesVenta.setCantidad(dto.cantidad());
+
+            Optional<Productos> optionalProducto = productosRepository.findById(dto.productoId());
+            if (optionalProducto.isPresent()) {
+                detallesVenta.setProductoId(optionalProducto.get());
+                detallesVenta.setPrecioUnitario(optionalProducto.get().getPrecio());
+            } else {
+                throw new RuntimeException("Producto con id " + dto.productoId() + " no encontrado.");
+            }
+
+            detallesVenta.setVentaId(ventaActualizada);
+            nuevosDetalles.add(detallesVenta);
+        }
+
+        // Guardar los nuevos detalles
+        detallesVentasRepository.saveAll(nuevosDetalles);
+    }
+
+    /**
+     * DetalleVentas
+     */
+
+    @Override
+    public List<DetalleVentaDetailDto> getAllDetallesVenta() {
+        List<DetalleVentaDetailDto> list = new ArrayList<>();
+        Iterable<DetallesVenta> detallesVentas = detallesVentasRepository.findAll();
+
+        detallesVentas.forEach(item ->{
+            DetalleVentaDetailDto dto = new DetalleVentaDetailDto(
+                    item.getId(),
+                    item.getVentaId().getId(),
+                    item.getProductoId().getNombre(),
+                    item.getCantidad());
+            list.add(dto);
+        });
+        System.out.println("Fin del listado de Detalles");
+        return list;
+    }
+
+
+
+
 
 }

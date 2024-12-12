@@ -17,6 +17,17 @@ public class ApiController {
     @Autowired
     MaintenanceService maintenanceService;
 
+    /**
+     * Usuarios
+     */
+    //Lista de Usuarios
+    @GetMapping("/usuarios")
+    public Object getUsuarios(@RequestParam(name = "id", required = false) Integer id) {
+        if (id != null) {
+            return maintenanceService.getUsuarioById(id);
+        }
+        return maintenanceService.getAllUsuarios();
+    }
 
 
     //Create Usuario
@@ -31,6 +42,13 @@ public class ApiController {
         maintenanceService.updateUsuario(usuariosDto);
         return usuariosDto.toString();
     }
+
+    //Delete Usuario
+    @PostMapping("/deleteUsuario")
+    public void deleteUsuario(@RequestParam Integer id) {
+        maintenanceService.deleteUsuario(id);
+    }
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UsuarioLoginDto usuarioLoginDto){
@@ -76,26 +94,6 @@ public class ApiController {
 
 
 
-
-    /**
-     * DetallesVenta
-     */
-    //Lista los Detalles de Venta
-    @GetMapping("/indexDetalleVenta")
-    public List<DetalleVentaDto> listDetalleVenta(){
-        return maintenanceService.getAllDetallesVenta();
-    }
-
-    //Obtener los Detalles de Venta por id de la venta
-    @GetMapping("/detallesVenta/{id}")
-    public ResponseEntity<List<DetalleVentaDto>> getDetallesVentaByVentaId(@PathVariable Integer id) {
-        try {
-            List<DetalleVentaDto> detalles = maintenanceService.getDetallesVentaByVentaId(id);
-            return new ResponseEntity<>(detalles, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
 
 }
