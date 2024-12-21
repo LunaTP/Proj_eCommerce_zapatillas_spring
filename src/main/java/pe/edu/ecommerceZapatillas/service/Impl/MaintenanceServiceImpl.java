@@ -340,5 +340,21 @@ public class MaintenanceServiceImpl implements MaintenanceService {
 
 
 
+    @Override
+    public UsuariosDto getUsuarioByEmail(String email) {
+        Optional<Usuarios> optionalUsuario = usuariosRepository.findByEmail(email);
+        if (optionalUsuario.isEmpty()) {
+            return null;
+        }
+
+        Usuarios usuario = optionalUsuario.get();
+        return new UsuariosDto(
+                usuario.getId(),
+                usuario.getNombre(),
+                usuario.getEmail(),
+                usuario.getRolId().getId(),
+                usuario.getContrasenia()
+        );
+    }
 
 }

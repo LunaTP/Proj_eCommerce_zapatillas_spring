@@ -60,6 +60,11 @@ public class ApiController {
         }
     }
 
+    @GetMapping("/getUserBySession")
+    public Object getUsuarioForSession(@RequestParam(name = "email", required = false) String email){
+        return maintenanceService.getUsuarioByEmail(email);
+    }
+
 
 
 

@@ -4,7 +4,6 @@
 <body id="body-pd">
     <header class="header" id="header">
         <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-        <div class="header_img"> <img src="https://i.imgur.com/hczKIze.jpg" alt=""> </div>
     </header>
     <div class="l-navbar" id="nav-bar">
         <nav class="nav">
@@ -17,7 +16,7 @@
                     <a th:href="@{/web/detalleVentas}" class="nav_link active"> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Detalles de Ventas</span> </a>
                 </div>
             </div>
-            <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
+            <a th:href="@{/web/logout}" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
         </nav>
     </div>
     <div class="height-100 w-75 mx-auto">
@@ -35,7 +34,6 @@
                 <th>Nro de Venta</th>
                 <th>Nombre de Producto</th>
                 <th>Cantidad</th>
-                <th>Mantenimiento</th>
             </tr>
             </thead>
             <tbody>
@@ -44,7 +42,7 @@
                 <td th:text="${item.ventaId()}"></td>
                 <td th:text="${item.nombreProducto()}"></td>
                 <td th:text="${item.cantidad()}"></td>
-                <td>
+<!--                <td>-->
 <!--                    <div class="d-flex gap-2">-->
 <!--                        <a th:href="@{/web/usuariosUpdate/{id}(id=${item.id()})}"-->
 <!--                           class="btn btn-secondary btn-sm text-white">Editar</a>-->
@@ -53,7 +51,7 @@
 <!--                            <button type="submit" class="btn btn-danger btn-sm text-white">Eliminar</button>-->
 <!--                        </form>-->
 <!--                    </div>-->
-                </td>
+<!--                </td>-->
             </tr>
             </tbody>
         </table>

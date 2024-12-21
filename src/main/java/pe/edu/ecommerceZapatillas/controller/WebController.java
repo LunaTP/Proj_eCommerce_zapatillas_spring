@@ -1,5 +1,7 @@
 package pe.edu.ecommerceZapatillas.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,26 @@ import java.util.List;
 public class WebController {
     @Autowired
     MaintenanceService maintenanceService;
+
+
+    /**
+     * Session - Login - Restricted
+     */
+    @GetMapping("/login")
+    public String login(Model model) {
+        return "login";
+    }
+
+    @GetMapping("/restricted")
+    public String restricted(Model model) {
+        return "restricted";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        request.logout(); // Lógica para cerrar sesión
+        return "redirect:/web/login"; // Redirige a la página principal después del logout
+    }
 
 
     /**

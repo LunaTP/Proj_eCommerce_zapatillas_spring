@@ -55,4 +55,12 @@ public interface MaintenanceService {
     void editarVenta(VentasDto ventasDto);
 
     void registrarVenta(VentasDto ventasDto);
+
+
+
+
+
+
+    UsuariosDto getUsuarioByEmail(String email);
+
 }
