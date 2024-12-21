@@ -1,9 +1,9 @@
 package pe.edu.ecommerceZapatillas.config;
 
-import jakarta.persistence.Embeddable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@Embeddable
+@EnableCaching
 public class CacheConfig {
 }

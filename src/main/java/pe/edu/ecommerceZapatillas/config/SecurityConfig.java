@@ -26,9 +26,9 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Habilitar CORS globalmente
+                //Pa habilitar las solicitudes del angular
                 .cors().and()
-                // Deshabilitar CSRF para APIs (solo si es necesario, por ejemplo para SPA)
+                //Desabilitar la protección de ataques, sin esto no funciona porque no hay token
                 .csrf().disable()
                 .authorizeHttpRequests(auth -> auth
                         // Permitir acceso sin autenticación a la API
@@ -41,14 +41,18 @@ public class SecurityConfig implements WebMvcConfigurer {
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex
+                        // En caso haya una execptión en el login, redirija al restricted
                         .accessDeniedHandler((request, response, accessDeniedException) -> {
                             response.sendRedirect("/web/restricted");
                         })
                 )
                 .formLogin(form -> form
+                        //formluraion de login
                         .loginPage("/web/login")
                         .defaultSuccessUrl("/web/usuarios", false)
                         .permitAll()
+
+                        // Manejado de aprobación
                         .successHandler((request, response, authentication) -> {
                             response.sendRedirect("/web/usuarios");
                         })
@@ -61,11 +65,12 @@ public class SecurityConfig implements WebMvcConfigurer {
         return http.build();
     }
 
-    // Configuración de CORS para permitir solicitudes desde Angular (localhost:4200)
+    //Permitir solicitudes del fronttt
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**")  // Configuración CORS para las rutas que empiecen con /api
-                .allowedOrigins("http://localhost:4200")  // Permite solicitudes solo desde Angular (localhost:4200)
+
+        registry.addMapping("/api/**")  // Permitir las rutas con el /api
+                .allowedOrigins("http://localhost:4200")  // Permite solicitudes desde el (localhost:4200)
                 .allowedMethods("GET", "POST", "PUT", "DELETE")  // Métodos HTTP permitidos
                 .allowedHeaders("*")  // Permite todas las cabeceras
                 .allowCredentials(true);  // Permite enviar credenciales como cookies

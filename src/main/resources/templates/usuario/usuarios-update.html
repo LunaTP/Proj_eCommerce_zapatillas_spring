@@ -38,7 +38,7 @@
         <div class="mb-3 row">
             <label for="nombre" class="col-sm-3 col-form-label">Nombre</label>
             <div class="col-sm-9">
-                <input id="nombre" type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre Completo" required>
+                <input id="nombre" type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre Completo" required minlength="3" maxlength="50">
             </div>
         </div>
 
@@ -46,7 +46,7 @@
         <div class="mb-3 row">
             <label for="email" class="col-sm-3 col-form-label">Correo Electrónico</label>
             <div class="col-sm-9">
-                <input id="email" type="email" class="form-control" th:field="*{email}" placeholder="ejemplo@correo.com" required>
+                <input id="email" type="email" class="form-control" th:field="*{email}" placeholder="ejemplo@correo.com" required maxlength="50">
             </div>
         </div>
 
@@ -65,7 +65,7 @@
         <div class="mb-3 row">
             <label for="contrasenia" class="col-sm-3 col-form-label">Contraseña</label>
             <div class="col-sm-9">
-                <input id="contrasenia" type="text" class="form-control" th:field="*{contrasenia}" placeholder="Ingrese una contraseña segura" required>
+                <input id="contrasenia" type="text" class="form-control" th:field="*{contrasenia}" placeholder="Ingrese una contraseña segura" required minlength="6" maxlength="20">
             </div>
         </div>
 

@@ -29,28 +29,28 @@
         <div class="mb-3 row">
             <label for="nombre" class="col-sm-3 col-form-label">Nombre:</label>
             <div class="col-sm-9">
-                <input id="nombre" type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre del producto" required>
+                <input id="nombre" type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre del producto" required maxlength="100">
             </div>
         </div>
 
         <div class="mb-3 row">
             <label for="descripcion" class="col-sm-3 col-form-label">Descripción:</label>
             <div class="col-sm-9">
-                <input id="descripcion" type="text" class="form-control" th:field="*{descripcion}" placeholder="Descripción del producto" required>
+                <input id="descripcion" type="text" class="form-control" th:field="*{descripcion}" placeholder="Descripción del producto" required maxlength="150">
             </div>
         </div>
 
         <div class="mb-3 row">
             <label for="precio" class="col-sm-3 col-form-label">Precio:</label>
             <div class="col-sm-9">
-                <input id="precio" type="number" class="form-control" th:field="*{precio}" placeholder="Ingrese Precio" required>
+                <input id="precio" type="number" class="form-control" th:field="*{precio}" placeholder="Ingrese Precio" required min="0" max="1000000">
             </div>
         </div>
 
         <div class="mb-3 row">
             <label for="stock" class="col-sm-3 col-form-label">Stock:</label>
             <div class="col-sm-9">
-                <input id="stock" type="number" class="form-control" th:field="*{stock}" placeholder="Ingrese Stock" required>
+                <input id="stock" type="number" class="form-control" th:field="*{stock}" placeholder="Ingrese Stock" required min="0" max="999999">
             </div>
         </div>
 
